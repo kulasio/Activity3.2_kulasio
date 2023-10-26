@@ -172,3 +172,16 @@ FROM public.player
 JOIN public.hero 
 ON p.hero_id = h.hero_id
 WHERE h.is_active = true;
+
+--#6
+SELECT hero_name
+FROM public.hero
+WHERE class_id IN (SELECT class_id FROM public.class WHERE class_name = 'Skilled Archers' OR class_name = 'Range Archers');
+
+--#7
+SELECT c.class_name, AVG(p.player_level) as average_level
+FROM public.class 
+LEFT JOIN public.hero  ON c.class_id = h.class_id
+LEFT JOIN public.player p ON h.hero_id = p.hero_id
+GROUP BY c.class_name
+ORDER BY average_level DESC;
